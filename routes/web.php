@@ -19,9 +19,10 @@ Route::get('/', function () {
 
 Route::get('ink', [\App\Http\Controllers\InkController::class, 'index'])->name('ink.ink');
 Route::get('addInk', [\App\Http\Controllers\InkController::class, 'create'])->name('addInk.add');
-Route::post('inks/{id}', [\App\Http\Controllers\InkController::class, 'store'])->name('ink.store');
+Route::post('inksStore/{id}', [\App\Http\Controllers\InkController::class, 'store'])->name('ink.store');
 Route::get('showInk', [\App\Http\Controllers\InkController::class, 'show'])->name('ink.show');
 Route::get('editInk', [\App\Http\Controllers\InkController::class, 'edit'])->name('ink.edit');
+Route::post('inksUpdate/{id}', [\App\Http\Controllers\InkController::class, 'update'])->name('ink.update');
 Route::get('deleteInk', [\App\Http\Controllers\InkController::class, 'delete'])->name('ink.delete');
 
 Auth::routes();

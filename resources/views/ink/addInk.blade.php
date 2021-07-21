@@ -16,24 +16,24 @@
     <div class="container">
         <h1>Add Ink</h1>
         <div>
-            <form action="{{ route('addInk.add') }}" method="post">
+            <form action="{{ route('addInk.add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-3">
                     <div class="col-mb-3">
-                        <label for="formGroupExampleInput" class="form-label">Example label</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                        <label for="ink_img" class="form-label">Profile Image</label>
+                        <input class="form-control" type="file" id="ink_img">
                     </div>
                     <div class="col-mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                        <label for="ink_model" class="form-label">Model</label>
+                        <input type="text" class="form-control" id="ink_model" placeholder="">
                     </div>
                     <div class="col-mb-3">
-                        <label for="formGroupExampleInput" class="form-label">Example label</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                        <label for="ink_price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="ink_price" placeholder="RM 0.00">
                     </div>
                     <div class="col-mb-3">
-                        <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                        <label for="ink_commision" class="form-label">Commision</label>
+                        <input type="text" class="form-control" id="ink_model" placeholder="RM 0.00">
                     </div>
                 </div>
                 <div class="g-3">
