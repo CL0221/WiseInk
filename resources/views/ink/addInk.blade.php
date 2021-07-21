@@ -16,28 +16,39 @@
     <div class="container">
         <h1>Add Ink</h1>
         <div>
-            <form action="{{ route('addInk.add') }}" method="POST" enctype="multipart/form-data">
+            <a href="{{ url('inks') }}" class="btn btn-primary">Back</a>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ url('add-ink') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-3">
                     <div class="col-mb-3">
                         <label for="ink_img" class="form-label">Profile Image</label>
-                        <input class="form-control" type="file" id="ink_img">
+                        <input class="form-control" type="file" id="ink_img" name="ink_img">
                     </div>
                     <div class="col-mb-3">
                         <label for="ink_model" class="form-label">Model</label>
-                        <input type="text" class="form-control" id="ink_model" placeholder="">
+                        <input type="text" class="form-control" id="ink_model" placeholder="" name="ink_model">
                     </div>
                     <div class="col-mb-3">
                         <label for="ink_price" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="ink_price" placeholder="RM 0.00">
+                        <input type="text" class="form-control" id="ink_price" placeholder="RM 0.00" name="ink_price">
                     </div>
                     <div class="col-mb-3">
                         <label for="ink_commision" class="form-label">Commision</label>
-                        <input type="text" class="form-control" id="ink_model" placeholder="RM 0.00">
+                        <input type="text" class="form-control" id="ink_commision" placeholder="RM 0.00" name="ink_commision">
                     </div>
                 </div>
                 <div class="g-3">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" name="inks" class="btn btn-primary">Add</button>
                 </div>
             </form>
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ink;
+use Illuminate\Support\Facades\File;
 
 class InkController extends Controller
 {
@@ -14,10 +15,8 @@ class InkController extends Controller
      */
     public function index()
     {
-        $inks = Ink::latest()->paginate(5);
-
-        return view('ink.ink', compact('inks'))
-        ->with('i', (request()->input('page', 1)-1)*5);
+        $ink = Ink::all();
+        return view('ink.index', compact('ink'));
     }
 
     /**
@@ -38,27 +37,21 @@ class InkController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'ink_model' => 'required',
-            'ink_price' => 'required',
-            'ink_commision' => 'required',
-            'ink_img' => 'required|image|mimes:png,jpg|max:2048',
-        ]);
-        
-        $input = $request->all();
-
-        if($image = $request->file('ink_img')){
-            $destinationPath = 'image/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input['image'] = "$profileImage";
+        $ink = new Ink;
+        $ink->ink_model = $request->input('ink_model');
+        $ink->ink_price = $request->input('ink_price');
+        $ink->ink_commision = $request->input('ink_commision');
+        if($request->hasFile('ink_img')){
+            $file = $request->file('ink_img');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time(). '.' .$extension;
+            $file->move('public/image', $fileName);
+            $ink->ink_img = $fileName;
         }
-
-        Ink::create($input);
-
-        return redirect()
-        ->route('ink.ink')
-        ->with('success', 'Ink created successfully.');
+        $ink->save();
+        return redirect('inks')
+        //->back()
+        ->with('success', 'Ink has been created.');
     }
 
     /**
@@ -69,7 +62,7 @@ class InkController extends Controller
      */
     public function show(Ink $ink)
     {
-        return view('ink.show', compact('inks'));
+        //
     }
 
     /**
@@ -78,9 +71,10 @@ class InkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ink $ink)
+    public function edit($id)
     {
-        return view('ink.editInk', compact('inks'));
+        $ink = Ink::find($id);
+        return view('ink.editInk', compact('ink'));
     }
 
     /**
@@ -90,31 +84,27 @@ class InkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ink $ink)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'ink_model' => 'required',
-            'ink_price' => 'required',
-            'ink_commision' => 'required',
-            'ink_img' => 'required|image|mimes:png,jpg|max:2048',
-        ]);
-        
-        $input = $request->all();
-
-        if($image = $request->file('ink_img')){
-            $destinationPath = 'image/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input['ink_image'] = "$profileImage";
-        }else{
-            unset($input['ink_image']);
+        $ink = Ink::find($id);
+        $ink->ink_model = $request->input('ink_model');
+        $ink->ink_price = $request->input('ink_price');
+        $ink->ink_commision = $request->input('ink_commision');
+        if($request->hasFile('ink_img')){
+            $destination = 'public/image/'.$ink->ink_img;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('ink_img');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time(). '.' .$extension;
+            $file->move('public/image', $fileName);
+            $ink->ink_img = $fileName;
         }
-
-        $ink->update($input);
-
-        return redirect()
-        ->route('ink.ink')
-        ->with('success', 'Ink updated successfully.');
+        $ink->update();
+        return redirect('inks')
+        //->back()
+        ->with('success', 'Ink has been updated.');
     }
 
     /**
@@ -123,10 +113,15 @@ class InkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ink $ink)
+    public function destroy($id)
     {
+        $ink = Ink::find($id);
+        $destination = 'public/image/'.$ink->ink_img;
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
         $ink->delete();
-        return redirect()->route('ink.ink')
+        return redirect('inks')
         ->with('success', 'Ink deleted successfully.');
     }
 }

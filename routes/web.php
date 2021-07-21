@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('ink', [\App\Http\Controllers\InkController::class, 'index'])->name('ink.ink');
-Route::get('addInk', [\App\Http\Controllers\InkController::class, 'create'])->name('addInk.add');
-Route::post('inksStore/{id}', [\App\Http\Controllers\InkController::class, 'store'])->name('ink.store');
-Route::get('showInk', [\App\Http\Controllers\InkController::class, 'show'])->name('ink.show');
-Route::get('editInk', [\App\Http\Controllers\InkController::class, 'edit'])->name('ink.edit');
-Route::post('inksUpdate/{id}', [\App\Http\Controllers\InkController::class, 'update'])->name('ink.update');
-Route::get('deleteInk', [\App\Http\Controllers\InkController::class, 'delete'])->name('ink.delete');
+Route::get('inks', [InkController::class, 'index']);
+Route::get('add-ink', [InkController::class, 'create']);
+Route::post('add-ink', [InkController::class, 'store']);
+Route::get('edit-ink/{id}', [InkController::class, 'edit']);
+Route::put('update-ink/{id}', [InkController::class, 'update']);
+Route::get('delete-ink/{id}', [InkController::class, 'destroy']);
 
 Auth::routes();
 
