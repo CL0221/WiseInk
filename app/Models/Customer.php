@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillabel=['customer_name', 'customer_address', 'customer_number', 'model', 'status', 'remake'];
+    protected $table = 'customers';
+    protected $fillabel = ['customer_name', 'customer_address', 'customer_number', 'model', 'status', 'remake'];
 }

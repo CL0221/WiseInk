@@ -45,7 +45,7 @@ class InkController extends Controller
             $file = $request->file('ink_img');
             $extension = $file->getClientOriginalExtension();
             $fileName = time(). '.' .$extension;
-            $file->move('public/image', $fileName);
+            $file->move('images', $fileName);
             $ink->ink_img = $fileName;
         }
         $ink->save();
@@ -91,14 +91,14 @@ class InkController extends Controller
         $ink->ink_price = $request->input('ink_price');
         $ink->ink_commision = $request->input('ink_commision');
         if($request->hasFile('ink_img')){
-            $destination = 'public/image/'.$ink->ink_img;
+            $destination = 'images/'.$ink->ink_img;
             if(File::exists($destination)){
                 File::delete($destination);
             }
             $file = $request->file('ink_img');
             $extension = $file->getClientOriginalExtension();
             $fileName = time(). '.' .$extension;
-            $file->move('public/image', $fileName);
+            $file->move('images', $fileName);
             $ink->ink_img = $fileName;
         }
         $ink->update();

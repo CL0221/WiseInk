@@ -16,10 +16,10 @@ class CreateCommisionsTable extends Migration
         Schema::create('commisions', function (Blueprint $table) {
             $table->id();
             $table->string('collect_model', 255);
-            $table->string('collect_price', 255);
+            $table->decimal('collect_price', 22);
             $table->string('collect_person', 255);
             $table->string('customer', 255);
-            $table->string('remark', 255);
+            $table->string('remark', 255)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

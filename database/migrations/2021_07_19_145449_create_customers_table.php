@@ -19,8 +19,9 @@ class CreateCustomersTable extends Migration
             $table->string('customer_address', 255);
             $table->string('customer_number', 255);
             $table->string('model', 255);
+            $table->float('quantity');
             $table->string('status', 255);
-            $table->string('remake', 255);
+            $table->string('remake', 255)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();
         });

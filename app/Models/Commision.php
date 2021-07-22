@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Commision extends Model
 {
     use HasFactory;
-    protected $fillabel=['collect_model', 'collect_price', 'collect_person', 'customer', 'remark'];
+    protected $table = 'commisions';
+    protected $fillabel = ['collect_model', 'collect_price', 'collect_person', 'customer', 'remark'];
 }
